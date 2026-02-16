@@ -1,7 +1,7 @@
 global:
   domain: dev-djb.nitcon.in ## Add your Domain Name "Eg: site.mydomain.com" Do not use the dummy domain
   setup: fullsetup
-  containerRegistry: mcd89
+containerRegistry: delhijalboard 
 
 cluster-configs:
   namespaces:
@@ -25,17 +25,17 @@ cluster-configs:
     egov-config:
       namespace: [egov, monitoring]
       data:
-        db-host: primary.kgotpxbdxyrjhhuirxziysxziejhpq.postgresql.ap-hyderabad-1.oci.oraclecloud.com:5432 ## Add db-host name eg: upyog-demo.database.azure.com
+        db-host: 68.233.117.247:5432 ## Add db-host name eg: upyog-demo.database.azure.com
         db-name: djbdev ## Add db-name
-        db-url: jdbc:postgresql://primary.kgotpxbdxyrjhhuirxziysxziejhpq.postgresql.ap-hyderabad-1.oci.oraclecloud.com:5432/djbdev ## example: jdbc:postgresql://upyog-demo.postgres.database.azure.com:5432/egov_demo
-        erp-db-url: jdbc:postgresql://primary.kgotpxbdxyrjhhuirxziysxziejhpq.postgresql.ap-hyderabad-1.oci.oraclecloud.com:5432/djbdevfinance
-        keycloak-db-name: "djbdev"
+        db-url: jdbc:postgresql://68.233.117.247:5432/djbdev ## example: jdbc:postgresql://upyog-demo.postgres.database.azure.com:5432/egov_demo
+        auth-db-name: "authdb"
+        #erp-db-url: jdbc:postgresql://primary.kgotpxbdxyrjhhuirxziysxziejhpq.postgresql.ap-hyderabad-1.oci.oraclecloud.com:5432/djbdevfinance
         domain: dev-djb.nitcon.in ## Add your Domain Name
         egov-services-fqdn-name: https://dev-djb.nitcon.in/ ## Add your Domain Name
         egov-state-level-tenant-id: "dl"
         s3-assets-bucket: "(pg-egov-assets|egov-playground-assets)"
         es-host: "elasticsearch-data.backbone"
-        es-indexer-host: "http://elasticsearch-data.backbone:9200/"
+        es-indexer-host: "https://elasticsearch-data.backbone:9200/"
         flyway-locations: "filesystem:/flyway/sql,filesystem:/flyway/seed,filesystem:/flyway/qa"
         kafka-brokers: "release-name-kafka-controller-headless.kafka-kraft:9092"
         kafka-infra-brokers: kafka-v2-infra.kafka-cluster:9092
@@ -162,6 +162,7 @@ cluster-configs:
         home-ui: "http://home-ui:8080/"
         revenue-ingestion: "http://revenue-ingestion:8080/"
         keycloak: "http://keycloak:8080/"
+        gateway: "http://gateway:8080/"
 
 employee:
   dashboard-url: "https://dashboard-pbuat.egovernments.org/s/w---s/app/kibana#/dashboard/4e687470-f3c7-11e8-8d09-b151e2b1cf8e?embed=true&_g=(refreshInterval%3A(pause%3A!f%2Cvalue%3A300000)%2Ctime%3A(from%3Anow-15m%2Cmode%3Aquick%2Cto%3Anow))"
@@ -169,35 +170,35 @@ employee:
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
       <script src=https://unpkg.com/@egovernments/telemetry@0.0.2/dist/egov-telemetry-1557467338.js type=text/javascript></script>
-      <script src= type=text/javascript></script>
+      <script src=https://objectstorage.ap-hyderabad-1.oraclecloud.com/n/axn3czn1s06y/b/djb-dev-asset-bucket/o/globalConfigs.js type=text/javascript></script>
       ';"
 digit-ui:
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
-      <script src= type=text/javascript></script>
+      <script src=https://objectstorage.ap-hyderabad-1.oraclecloud.com/n/axn3czn1s06y/b/djb-dev-asset-bucket/o/globalConfigs.js type=text/javascript></script>
       ';"
 # workbench-ui >>>>>>>>>>>>>>>>>>>>>>>>>>>
 workbench-ui:
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
-      <script src= type=text/javascript></script>';"
+      <script src=https://objectstorage.ap-hyderabad-1.oraclecloud.com/n/axn3czn1s06y/b/djb-dev-asset-bucket/o/globalConfigs.js type=text/javascript></script>';"
 
 # finance-ui >>>>>>>>>>>>>>>>>>>>>>>>>>>
 finance-ui:
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
-      <script src= type=text/javascript></script>';"
+      <script src=https://objectstorage.ap-hyderabad-1.oraclecloud.com/n/axn3czn1s06y/b/djb-dev-asset-bucket/o/globalConfigs.js type=text/javascript></script>';"
 
-#citizen:
-#  custom-js-injection: |
-#    sub_filter.conf: "
-#      sub_filter  '<head>' '<head>
-#      <script src=https://unpkg.com/@egovernments/telemetry@0.0.2/dist/egov-telemetry-1557467338.js type=text/javascript></script>
-#      <script src=https://abdeas-dev-asset.s3.ap-south-1.amazonaws.com/globalConfigs.js type=text/javascript></script>
-#      ';"
+citizen:
+  custom-js-injection: |
+    sub_filter.conf: "
+      sub_filter  '<head>' '<head>
+      <script src=https://unpkg.com/@egovernments/telemetry@0.0.2/dist/egov-telemetry-1557467338.js type=text/javascript></script>
+      <script src=https://objectstorage.ap-hyderabad-1.oraclecloud.com/n/axn3czn1s06y/b/djb-dev-asset-bucket/o/globalConfigs.js type=text/javascript></script>
+      ';"
 
 egov-filestore:
   heap: "-Xmx256m -Xms256m"
@@ -211,7 +212,7 @@ egov-filestore:
   allowed-file-formats-map: "{jpg:{'image/jpg','image/jpeg'},jpeg:{'image/jpeg','image/jpg'},png:{'image/png'},pdf:{'application/pdf'},odt:{'application/vnd.oasis.opendocument.text'},ods:{'application/vnd.oasis.opendocument.spreadsheet'},docx:{'application/x-tika-msoffice','application/x-tika-ooxml','application/vnd.oasis.opendocument.text','application/msword'},doc:{'application/x-tika-msoffice','application/x-tika-ooxml','application/vnd.oasis.opendocument.text','application/msword'},dxf:{'text/plain','application/dxf','application/octet-stream','image/vnd.dxf','image/vnd.dxf; format=ascii','image/vnd.dxf; format=binary','image/vnd.dxb'},csv:{'text/plain'},txt:{'text/plain'},xlsx:{'application/x-tika-ooxml','application/x-tika-msoffice','application/vnd.ms-excel'},xls:{'application/x-tika-ooxml','application/x-tika-msoffice','application/vnd.ms-excel'}}"
   allowed-file-formats: "jpg,jpeg,png,doc,docx,pdf,odt,ods,text,dxf,xls,xlsx"
   filestore-url-validity: 3600
-  fixed-bucketname:  ## Add filestore bucket name
+  fixed-bucketname:  djb-dev-filestore ## Add filestore bucket name
 
 pgadmin:
   images:
@@ -286,7 +287,7 @@ egov-user:
   decryption-abac-enabled: "false"
 
 inbox:
-  service-map: '{"FSM":{"searchPath":"http://fsm.egov:8080/fsm/v1/_search","dataRoot":"fsm","applNosParam":"applicationNos","businessIdProperty":"applicationNo"},"FSM_VEHICLE_TRIP":{"searchPath":"http://vehicle.egov:8080/vehicle/trip/v1/_search","dataRoot":"vehicleTrip","applNosParam":"applicationNos","businessIdProperty":"applicationNo"},"PT.CREATE,PT.UPDATE,PT.MUTATION":{"searchPath":"http://property-services.egov:8080/property-services/property/_search","dataRoot":"Properties","applNosParam":"acknowldgementNumber","businessIdProperty":"acknowldgementNumber","applsStatusParam":"status"},"NewTL,DIRECTRENEWAL,EDITRENEWAL":{"searchPath":"http://tl-services.egov:8080/tl-services/v1/_search","dataRoot":"Licenses","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"},"BPA_LOW,BPA,BPA_OC,BPA_HIGH":{"searchPath":"http://bpa-services.egov:8080/bpa-services/v1/bpa/_search","dataRoot":"BPA","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"ARCHITECT,ENGINEER,STRUCTURALENGINEER,BUILDER,SUPERVISOR,TOWNPLANNER":{"searchPath":"http://tl-services.egov:8080/tl-services/v1/BPAREG/_search","dataRoot":"Licenses","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"},"FIRE_NOC_SRV,FIRE_NOC_OFFLINE,AIRPORT_NOC_OFFLINE,AIRPORT_NOC_SRV":{"searchPath":"http://noc-services.egov:8080/noc-services/v1/noc/_search","dataRoot":"Noc","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"asset-create":{"searchPath":"http://asset-services:8080/asset-services/v1/assets/_search","dataRoot":"Assets","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"ewst":{"searchPath":"http://ewaste-services.egov:8080/ewaste-services/ewaste-request/_search","dataRoot":"EwasteApplication","applNosParam":"requestId","businessIdProperty":"requestId","applsStatusParam":"status"},"ptr":{"searchPath":"http://pet-services.egov:8080/pet-services/pet-registration/_search","dataRoot":"PetRegistrationApplications","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"}, "street-vending":{"searchPath":"http://sv-services.egov:8080/sv-services/street-vending/_search","dataRoot":"SVDetail","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"}, "booking-refund":{"searchPath":"http://chb-services.egov:8080/chb-services/booking/v1/_search","dataRoot":"hallsBookingApplication","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"watertanker":{"searchPath":"http://request-service.egov:8080/request-service/water-tanker/v1/_search","dataRoot":"waterTankerBookingDetail","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"mobileToilet":{"searchPath":"http://request-service.egov:8080/request-service/mobile-toilet/v1/_search","dataRoot":"mobileToiletBookingDetails","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"cnd":{"searchPath":"http://cnd-service.egov:8080/cnd-service/v1/_search","dataRoot":"cndApplicationDetail","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"applicationStatus"}}'
+  service-map: '{"FSM":{"searchPath":"http://fsm.egov:8080/fsm/v1/_search","dataRoot":"fsm","applNosParam":"applicationNos","businessIdProperty":"applicationNo"},"FSM_VEHICLE_TRIP":{"searchPath":"http://vehicle.egov:8080/vehicle/trip/v1/_search","dataRoot":"vehicleTrip","applNosParam":"applicationNos","businessIdProperty":"applicationNo"},"PT.CREATE,PT.UPDATE,PT.MUTATION":{"searchPath":"http://property-services.egov:8080/property-services/property/_search","dataRoot":"Properties","applNosParam":"acknowldgementNumber","businessIdProperty":"acknowldgementNumber","applsStatusParam":"status"},"NewTL,DIRECTRENEWAL,EDITRENEWAL":{"searchPath":"http://tl-services.egov:8080/tl-services/v1/_search","dataRoot":"Licenses","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"},"BPA_LOW,BPA,BPA_OC,BPA_HIGH":{"searchPath":"http://bpa-services.egov:8080/bpa-services/v1/bpa/_search","dataRoot":"BPA","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"ARCHITECT,ENGINEER,STRUCTURALENGINEER,BUILDER,SUPERVISOR,TOWNPLANNER":{"searchPath":"http://tl-services.egov:8080/tl-services/v1/BPAREG/_search","dataRoot":"Licenses","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"},"FIRE_NOC_SRV,FIRE_NOC_OFFLINE,AIRPORT_NOC_OFFLINE,AIRPORT_NOC_SRV":{"searchPath":"http://noc-services.egov:8080/noc-services/v1/noc/_search","dataRoot":"Noc","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"asset-create":{"searchPath":"http://asset-services:8080/asset-services/v1/assets/_search","dataRoot":"Assets","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"ewst":{"searchPath":"http://ewaste-services.egov:8080/ewaste-services/ewaste-request/_search","dataRoot":"EwasteApplication","applNosParam":"requestId","businessIdProperty":"requestId","applsStatusParam":"status"},"ptr":{"searchPath":"http://pet-services.egov:8080/pet-services/pet-registration/_search","dataRoot":"PetRegistrationApplications","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"}, "street-vending":{"searchPath":"http://sv-services.egov:8080/sv-services/street-vending/_search","dataRoot":"SVDetail","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"}, "booking-refund":{"searchPath":"http://chb-services.egov:8080/chb-services/booking/v1/_search","dataRoot":"hallsBookingApplication","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"watertanker":{"searchPath":"http://request-service.egov:8080/request-service/water-tanker/v1/_search","dataRoot":"waterTankerBookingDetail","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"mobileToilet":{"searchPath":"http://request-service.egov:8080/request-service/mobile-toilet/v1/_search","dataRoot":"mobileToiletBookingDetails","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"cnd":{"searchPath":"http://cnd-service.egov:8080/cnd-service/v1/_search","dataRoot":"cndApplicationDetail","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"applicationStatus"},"NewSW1,ModifySWConnection,DisconnectSWConnection":{"searchPath":"http://sw-services.egov:8080/sw-services/swc/_search","dataRoot":"SewerageConnections","applNosParam":"applicationNumber","businessIdProperty":"applicationNo","applsStatusParam":"applicationStatus"},"WS.AMENDMENT,SW.AMENDMENT":{"searchPath":"http://localhost:1082/billing-service/amendment/_search","dataRoot":"Amendments","applNosParam":"consumerCode","businessIdProperty":"amendmentId","applsStatusParam":"status"},"NewWS1,ModifyWSConnection,DisconnectWSConnection":{"searchPath":"http://ws-services.egov:8080/ws-services/wc/_search","dataRoot":"WaterConnection","applNosParam":"applicationNumber","businessIdProperty":"applicationNo","applsStatusParam":"applicationStatus"}}'
   memory_limits: 512Mi
   heap: "-Xmx256m -Xms256m"
 
@@ -365,7 +366,7 @@ revenue-ingestion:
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 egov-mdms-service:
   replicas: 1
-  heap: "-Xmx512m -Xms512m"
+  heap: "-Xmx786m -Xms786m"
   memory_limits: "768Mi"
   #images:
   #  - upyogio/egov-mdms-service
@@ -385,13 +386,13 @@ egov-indexer:
     gitSync:
       repo: "git@github.com:Delhi-Jal-Board/djb-upyog-configs" ##### Change repo url with Your fork Repo url
       branch: "master" ##### Change repo branch with Your fork Repo branch
-  egov-indexer-yaml-repo-path: "file:///work-dir/djb-upyog-configs/configs/egov-indexer/billingservices-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/collection-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/egov-telemetry-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/egov-uploader-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/error-queue.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/finance-rolloutadotpion-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/payment-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/rainmaker-pgr-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/rainmaker-pt-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/rainmaker-tl-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/chatbot-telemetry.yaml"
+  egov-indexer-yaml-repo-path: "file:///work-dir/djb-upyog-configs/configs/egov-indexer/billingservices-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/collection-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/egov-telemetry-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/egov-uploader-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/error-queue.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/finance-rolloutadotpion-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/payment-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/rainmaker-pgr-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/rainmaker-pt-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/rainmaker-tl-indexer.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/chatbot-telemetry.yaml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/water-service.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/sewerage-service.yml,file:///work-dir/djb-upyog-configs/configs/egov-indexer/water-services-meter.yml"
 
 egov-persister:
   replicas: 1
   images:
     - upyogio/egov-persister
-  persist-yml-path: "file:///work-dir/djb-upyog-configs/configs/egov-persister/pgr-services-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pt-mutation-calculator-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/apportion-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/billing-services-persist.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/egf-bill.yaml,file:///work-dir/djb-upyog-configs/configs/egov-persister/egov-user-event-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/egov-workflow-v2-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/firenoc_persiter.yaml,file:///work-dir/djb-upyog-configs/configs/egov-persister/hrms-employee-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pdf-generator.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pg-service-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pgr.v3.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/property-services.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pt-calculator-v2-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pt-drafts.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pt-persist.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/tl-billing-slab-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/tl-calculation-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/uploader-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/collection-migration-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/property-services-registry.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/tradelicense.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/sewerage-persist.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/water-persist.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/water-meter.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/bpa-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/assessment-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/chatbot.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/asset-calculator.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/asset-disposal.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/asset-maintenance.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/asset-persister.yml"
+  persist-yml-path: "file:///work-dir/djb-upyog-configs/configs/egov-persister/request-service-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pgr-services-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pt-mutation-calculator-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/apportion-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/billing-services-persist.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/egf-bill.yaml,file:///work-dir/djb-upyog-configs/configs/egov-persister/egov-user-event-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/egov-workflow-v2-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/firenoc_persiter.yaml,file:///work-dir/djb-upyog-configs/configs/egov-persister/hrms-employee-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pdf-generator.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pg-service-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pgr.v3.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/property-services.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pt-calculator-v2-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pt-drafts.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/pt-persist.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/tl-billing-slab-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/tl-calculation-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/uploader-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/collection-migration-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/property-services-registry.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/tradelicense.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/sewerage-persist.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/water-persist.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/water-meter.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/bpa-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/assessment-persister.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/chatbot.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/asset-calculator.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/asset-disposal.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/asset-maintenance.yml,file:///work-dir/djb-upyog-configs/configs/egov-persister/asset-persister.yml"
   initContainers:
     gitSync:
       repo: "git@github.com:Delhi-Jal-Board/djb-upyog-configs" ##### Change repo url with Your fork Repo url
@@ -407,7 +408,7 @@ egov-data-uploader:
       branch: "master" ##### Change repo branch with Your fork Repo branch
 
 egov-searcher:
-  search-yaml-path: "file:///work-dir/djb-upyog-configs/configs/egov-searcher/rainmaker-pgr-v2.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/weekly-impact-emailer-searcher.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/PTDemandBasedSearcher.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/bill-genie.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/rainmaker-tl.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/localitySearcher.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/inboxassetsearch.yaml"
+  search-yaml-path: "file:///work-dir/djb-upyog-configs/configs/egov-searcher/rainmaker-pgr-v2.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/weekly-impact-emailer-searcher.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/PTDemandBasedSearcher.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/bill-genie.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/rainmaker-tl.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/localitySearcher.yml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/inboxassetsearch.yaml,file:///work-dir/djb-upyog-configs/configs/egov-searcher/inboxWTSearch.yml"
   initContainers:
     gitSync:
       repo: "git@github.com:Delhi-Jal-Board/djb-upyog-configs" ##### Change repo url with Your fork Repo url
