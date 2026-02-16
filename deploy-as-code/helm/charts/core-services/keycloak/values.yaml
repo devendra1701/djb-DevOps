@@ -14,7 +14,7 @@ ingress:
 # Container Configs
 image:
   repository: "delhijalboard/keycloak"
-  tag: "v1"
+  tag: "v2"
 replicas: "1"
 
 # Additional Container Envs
@@ -23,7 +23,7 @@ env: |
     value: "8080"
   - name: PROXY_ADDRESS_FORWARDING
     value: "true"
-  - name: DB_VENDOR
+  - name: KC_DB
     value: postgres
   - name: DB_ADDR
     valueFrom:
@@ -34,31 +34,92 @@ env: |
     valueFrom: 
       configMapKeyRef:
         name: egov-config
-        key: keycloak-db-name
+        key: auth-db-name
   - name: DB_PORT
     value: "5432"
-  - name: DB_USER
+  - name: KC_DB_USERNAME
     valueFrom:
       secretKeyRef:
         name: db
         key: username
-  - name: DB_PASSWORD
+  - name: KC_DB_PASSWORD
     valueFrom:
       secretKeyRef:
         name: db
         key: password
+  - name: KC_DB_URL
+    value: "jdbc:postgresql://68.233.117.247:5432/authdb"      
   - name: KC_HTTP_ENABLED
     value: "true"
   - name: KC_PROXY
     value: "edge"
   - name: KC_HOSTNAME_STRICT
     value: "false"
+  - name: KC_HTTP_RELATIVE_PATH
+    value: "/keycloak"
+  - name: KC_HOSTNAME_URL
+    value: "https://dev-djb.nitcon.in/keycloak"
+  - name: KC_HOSTNAME_PATH
+    value: "/keycloak"
+  - name: KC_PROXY_HEADERS
+    value: "xforwarded"
+  - name: KC_BOOTSTRAP_ADMIN_USERNAME
+    value: "admin"
+  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+    value: "admin"
+
+  - name: QUARKUS_DATASOURCE_USER_STORE_DB_KIND
+    value: postgresql
+
+  - name: QUARKUS_DATASOURCE_USER_STORE_JDBC_URL
+    value: "jdbc:postgresql://68.233.117.247:5432/djbdev"
+
+  - name: QUARKUS_DATASOURCE_USER_STORE_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: db
+        key: username
+
+  - name: QUARKUS_DATASOURCE_USER_STORE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: db
+        key: password
+
+  - name: QUARKUS_DATASOURCE_USER_STORE_JDBC_TRANSACTIONS
+    value: enabled
+  - name: EGOV_ENC_HOST
+    valueFrom:
+      configMapKeyRef:
+        name: egov-service-host
+        key: egov-enc-service
+
+  - name: EGOV_ENCSERVICE_BASE_URL
+    value: http://egov-enc-service.egov:8080/egov-enc-service
+
+  - name: QUARKUS_DATASOURCE_USER_STORE_JDBC_TRANSACTIONS
+    value: enabled
+
+#  - name: QUARKUS_HIBERNATE_ORM_ENABLED 
+#    value: "true"
+#
+#  - name: QUARKUS_HIBERNATE_ORM_USER_STORE_ENABLED
+#    value: "true"
+#
+#  - name: QUARKUS_HIBERNATE_ORM_USER_STORE_DATASOURCE
+#    value: user-store
+#
+#  - name: QUARKUS_HIBERNATE_ORM_USER_STORE_PACKAGES
+#    value: org.keycloak.multipleds.storage.user.entities
+  
+
+
   #- name: KEYCLOAK_USER
   #  valueFrom:
   #    secretKeyRef:
   #      name: db
   #      key: keycloak-username
-  #- name: DB_PASSWORD
+  #- name: KEYCLOAK_PASSWORD
   #  valueFrom:
   #    secretKeyRef:
   #      name: db

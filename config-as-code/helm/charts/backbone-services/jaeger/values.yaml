@@ -36,7 +36,7 @@ storage:
   type: elasticsearch
   elasticsearch:
     scheme: http
-    host: elasticsearch-master
+    host: elasticsearch-data
     port: 9200
     user: ""
     usePassword: false
@@ -351,7 +351,7 @@ agent:
     additionalLabels: {}
 
 spark:
-  enabled: true
+  enabled: false
   annotations: {}
   image: jaegertracing/spark-dependencies
   imagePullSecrets: []

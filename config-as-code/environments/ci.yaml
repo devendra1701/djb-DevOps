@@ -24,19 +24,19 @@ jenkins:
     enabled: true
     acl:
       admin:
-        - delhijalboard*djbteam # Add github team. Members of this team gets admin access on jenkins
+        - Delhi-Jal-Board*djbteam # Add github team. Members of this team gets admin access on jenkins
       user: # Add github team. Members of this team gets login access on jenkins
-        - delhijalboard*djbteam-ci
-        - delhijalboard*djbteam-qa
+        - Delhi-Jal-Board*djbteam-ci
+        - Delhi-Jal-Board*djbteam-qa
 
   jobBuilder: # Add jobBuilder repo's, add repo's ssh link
     repos: >-
-      'https://github.com/Delhi-Jal-Board/djb-UPYOG.git'
+      'https://github.com/Delhi-Jal-Board/djb-UPYOG.git','https://github.com/Delhi-Jal-Board/DIGIT-Works.git'
   deploymentJobs: # Setup deploymentJobs ACL
     - name: ci # deployment job name
-      acl: [delhijalboard*djbteam-ci] # GitHub team name, Members of the team get access to deployment job
+      acl: [Delhi-Jal-Board*djbteam-ci] # GitHub team name, Members of the team get access to deployment job
     - name: qa
-      acl: [delhijalboard*djbteam-qa]
+      acl: [Delhi-Jal-Board*djbteam-qa]
 
   master:
     ingress:
