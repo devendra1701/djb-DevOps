@@ -10,7 +10,7 @@ initContainers: {}
 
 # Container Configs
 image:
-  repository: cp-kafka-connect
+  repository: docker.io/confluentinc/cp-kafka-connect
   tag: 5.4.1
 
 replicas: "1"

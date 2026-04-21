@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: superset-init
-          image: docker.io/delhijalboard/apache-superset:v4
+          image: docker.io/delhijalboard/apache-superset:v5
           command: ["/bin/sh", "-c"]
           args:
             - |

@@ -90,6 +90,10 @@ env: |
       configMapKeyRef:
         name: egov-config
         key: egov-services-fqdn-name
+  - name: REDIS_URL
+    value: redis.backbone
+  - name: REDIS_PORT
+    value: "6379"
 #  - name: DATA_CONFIG_URLS
 #    value: {{ index .Values "data-config-urls" | quote }}
 #  - name: FORMAT_CONFIG_URLS
