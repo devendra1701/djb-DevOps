@@ -37,8 +37,8 @@ cluster-configs:
         egov-services-fqdn-name: https://dev-djb.nitcon.in/ ## Add your Domain Name
         egov-state-level-tenant-id: "dl"
         s3-assets-bucket: "(pg-egov-assets|egov-playground-assets)"
-        es-host: "elasticsearch-data.backbone"
-        es-indexer-host: "https://elasticsearch-data.backbone:9200/"
+        es-host: "elasticsearch-master.backbone"
+        es-indexer-host: "https://elasticsearch-master.backbone:9200/"
         flyway-locations: "filesystem:/flyway/sql,filesystem:/flyway/seed,filesystem:/flyway/qa"
         kafka-brokers: "release-name-kafka-controller-headless.kafka-kraft:9092"
         kafka-infra-brokers: kafka-v2-infra.kafka-cluster:9092
@@ -98,7 +98,7 @@ cluster-configs:
         egov-data-uploader: "http://egov-data-uploader:8080/"
         egov-indexer: "http://egov-indexer:8080/"
         egov-hrms: "http://egov-hrms:8080/"
-        es-client: "http://elasticsearch-data.backbone:9200"
+        es-client: "http://elasticsearch-master.backbone:9200"
         hr-masters: "http://hr-masters:8080/"
         hr-employee: "http://hr-employee:8080/"
         hr-masters-v2: "http://hr-masters-v2:8080/"
@@ -297,7 +297,7 @@ egov-user:
   decryption-abac-enabled: "false"
 
 inbox:
-  service-map: '{"FSM":{"searchPath":"http://fsm.egov:8080/fsm/v1/_search","dataRoot":"fsm","applNosParam":"applicationNos","businessIdProperty":"applicationNo"},"FSM_VEHICLE_TRIP":{"searchPath":"http://vehicle.egov:8080/vehicle/trip/v1/_search","dataRoot":"vehicleTrip","applNosParam":"applicationNos","businessIdProperty":"applicationNo"},"PT.CREATE,PT.UPDATE,PT.MUTATION":{"searchPath":"http://property-services.egov:8080/property-services/property/_search","dataRoot":"Properties","applNosParam":"acknowldgementNumber","businessIdProperty":"acknowldgementNumber","applsStatusParam":"status"},"NewTL,DIRECTRENEWAL,EDITRENEWAL":{"searchPath":"http://tl-services.egov:8080/tl-services/v1/_search","dataRoot":"Licenses","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"},"BPA_LOW,BPA,BPA_OC,BPA_HIGH":{"searchPath":"http://bpa-services.egov:8080/bpa-services/v1/bpa/_search","dataRoot":"BPA","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"ARCHITECT,ENGINEER,STRUCTURALENGINEER,BUILDER,SUPERVISOR,TOWNPLANNER":{"searchPath":"http://tl-services.egov:8080/tl-services/v1/BPAREG/_search","dataRoot":"Licenses","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"},"FIRE_NOC_SRV,FIRE_NOC_OFFLINE,AIRPORT_NOC_OFFLINE,AIRPORT_NOC_SRV":{"searchPath":"http://noc-services.egov:8080/noc-services/v1/noc/_search","dataRoot":"Noc","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"asset-create":{"searchPath":"http://asset-services:8080/asset-services/v1/assets/_search","dataRoot":"Assets","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"ewst":{"searchPath":"http://ewaste-services.egov:8080/ewaste-services/ewaste-request/_search","dataRoot":"EwasteApplication","applNosParam":"requestId","businessIdProperty":"requestId","applsStatusParam":"status"},"ptr":{"searchPath":"http://pet-services.egov:8080/pet-services/pet-registration/_search","dataRoot":"PetRegistrationApplications","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"}, "street-vending":{"searchPath":"http://sv-services.egov:8080/sv-services/street-vending/_search","dataRoot":"SVDetail","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"}, "booking-refund":{"searchPath":"http://chb-services.egov:8080/chb-services/booking/v1/_search","dataRoot":"hallsBookingApplication","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"watertanker":{"searchPath":"http://request-service.egov:8080/request-service/water-tanker/v1/_search","dataRoot":"waterTankerBookingDetail","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"mobileToilet":{"searchPath":"http://request-service.egov:8080/request-service/mobile-toilet/v1/_search","dataRoot":"mobileToiletBookingDetails","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"cnd":{"searchPath":"http://cnd-service.egov:8080/cnd-service/v1/_search","dataRoot":"cndApplicationDetail","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"applicationStatus"},"NewSW1,ModifySWConnection,DisconnectSWConnection":{"searchPath":"http://sw-services.egov:8080/sw-services/swc/_search","dataRoot":"SewerageConnections","applNosParam":"applicationNumber","businessIdProperty":"applicationNo","applsStatusParam":"applicationStatus"},"WS.AMENDMENT,SW.AMENDMENT":{"searchPath":"http://localhost:1082/billing-service/amendment/_search","dataRoot":"Amendments","applNosParam":"consumerCode","businessIdProperty":"amendmentId","applsStatusParam":"status"},"NewWS1,ModifyWSConnection,DisconnectWSConnection":{"searchPath":"http://ws-services.egov:8080/ws-services/wc/_search","dataRoot":"WaterConnection","applNosParam":"applicationNumber","businessIdProperty":"applicationNo","applsStatusParam":"applicationStatus"}}'
+  service-map: '{"FSM":{"searchPath":"http://fsm.egov:8080/fsm/v1/_search","dataRoot":"fsm","applNosParam":"applicationNos","businessIdProperty":"applicationNo"},"FSM_VEHICLE_TRIP":{"searchPath":"http://vehicle.egov:8080/vehicle/trip/v1/_search","dataRoot":"vehicleTrip","applNosParam":"applicationNos","businessIdProperty":"applicationNo"},"PT.CREATE,PT.UPDATE,PT.MUTATION":{"searchPath":"http://property-services.egov:8080/property-services/property/_search","dataRoot":"Properties","applNosParam":"acknowldgementNumber","businessIdProperty":"acknowldgementNumber","applsStatusParam":"status"},"NewTL,DIRECTRENEWAL,EDITRENEWAL":{"searchPath":"http://tl-services.egov:8080/tl-services/v1/_search","dataRoot":"Licenses","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"},"BPA_LOW,BPA,BPA_OC,BPA_HIGH":{"searchPath":"http://bpa-services.egov:8080/bpa-services/v1/bpa/_search","dataRoot":"BPA","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"ARCHITECT,ENGINEER,STRUCTURALENGINEER,BUILDER,SUPERVISOR,TOWNPLANNER":{"searchPath":"http://tl-services.egov:8080/tl-services/v1/BPAREG/_search","dataRoot":"Licenses","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"},"FIRE_NOC_SRV,FIRE_NOC_OFFLINE,AIRPORT_NOC_OFFLINE,AIRPORT_NOC_SRV":{"searchPath":"http://noc-services.egov:8080/noc-services/v1/noc/_search","dataRoot":"Noc","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"asset-create":{"searchPath":"http://asset-services:8080/asset-services/v1/assets/_search","dataRoot":"Assets","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"},"ewst":{"searchPath":"http://ewaste-services.egov:8080/ewaste-services/ewaste-request/_search","dataRoot":"EwasteApplication","applNosParam":"requestId","businessIdProperty":"requestId","applsStatusParam":"status"},"ptr":{"searchPath":"http://pet-services.egov:8080/pet-services/pet-registration/_search","dataRoot":"PetRegistrationApplications","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"status"}, "street-vending":{"searchPath":"http://sv-services.egov:8080/sv-services/street-vending/_search","dataRoot":"SVDetail","applNosParam":"applicationNo","businessIdProperty":"applicationNo","applsStatusParam":"status"}, "booking-refund":{"searchPath":"http://chb-services.egov:8080/chb-services/booking/v1/_search","dataRoot":"hallsBookingApplication","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"watertanker-fixedpoint": {"searchPath": "http://request-service.egov:8080/request-service/water-tanker/v1/_search","dataRoot":"waterTankerBookingDetail","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"watertanker":{"searchPath":"http://request-service.egov:8080/request-service/water-tanker/v1/_search","dataRoot":"waterTankerBookingDetail","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"mobileToilet":{"searchPath":"http://request-service.egov:8080/request-service/mobile-toilet/v1/_search","dataRoot":"mobileToiletBookingDetails","applNosParam":"bookingNo","businessIdProperty":"bookingNo","applsStatusParam":"status"},"cnd":{"searchPath":"http://cnd-service.egov:8080/cnd-service/v1/_search","dataRoot":"cndApplicationDetail","applNosParam":"applicationNumber","businessIdProperty":"applicationNumber","applsStatusParam":"applicationStatus"},"NewSW1,ModifySWConnection,DisconnectSWConnection":{"searchPath":"http://sw-services.egov:8080/sw-services/swc/_search","dataRoot":"SewerageConnections","applNosParam":"applicationNumber","businessIdProperty":"applicationNo","applsStatusParam":"applicationStatus"},"WS.AMENDMENT,SW.AMENDMENT":{"searchPath":"http://localhost:1082/billing-service/amendment/_search","dataRoot":"Amendments","applNosParam":"consumerCode","businessIdProperty":"amendmentId","applsStatusParam":"status"},"NewWS1,ModifyWSConnection,DisconnectWSConnection":{"searchPath":"http://ws-services.egov:8080/ws-services/wc/_search","dataRoot":"WaterConnection","applNosParam":"applicationNumber","businessIdProperty":"applicationNo","applsStatusParam":"applicationStatus"}}'
   memory_limits: 512Mi
   heap: "-Xmx256m -Xms256m"
 
@@ -828,89 +828,82 @@ oauth2-proxy:
   config:
     configFile: |-
       email_domains = [ "*" ]
-      github_org = ""
-      github_team = ""
+      github_org = "Delhi-Jal-Board"
+      github_team = "djbteam"
       upstreams = [ "file:///dev/null" ]
 
-#grafana >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#grafana:
-#  dashboardsFolder: /work-dir/djb-upyog-configs/configs/monitoring-dashboards
-#  initContainers:
-#      enabled: true
-#      repo: "git@github.com:Delhi-Jal-Board/djb-upyog-configs"
-#      branch: "master"
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 ### Grafana >>>>>>>>>>>>>>>>>>>>
 grafana:
   github:
-    allowed_organizations: ["orgname"]
-    role_attribute_path: contains(groups[*], '@orgname/teamname') && 'Viewer'
+    allowed_organizations: ["Delhi-Jal-Board"]
+    role_attribute_path: contains(groups[*], '@Delhi-Jal-Board/djbteam') && 'Admin' || contains(groups[*], '@Delhi-Jal-Board/djbteam') && 'Viewer'
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 ### Prometheus & Alertmanager >>>>>>>>>>>>>>>>>>>>
 prometheus:
-  retention: 7d
-  storageSpec:
-    volumeClaimTemplate:
-      spec:
-        storageClassName: gp2
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 20Gi
   alertmanager:
     enabled: true
   externalLabels:
-    cluster: mcdupyog
+    cluster: upyog_dev_cluster #ocid1.cluster.oc1.ap-hyderabad-1.aaaaaaaaofmvqtwftqings6u4ifpvnpcpfeelumrjokfdznwtchtjzzlbsdq
   additionalScrapeConfigs:
-    - job_name: "nginx-ingress-metrics"
+    - job_name: 'nginx-ingress-metrics'
       static_configs:
-        - targets: ["nginx-ingress-controller-metrics.egov:10254"]
-    - job_name: "blackbox"
+        - targets: [ 'nginx-ingress-controller-metrics.egov:10254' ]
+    - job_name: 'blackbox'
       metrics_path: /probe
       params:
-        module: [http_2xx]
+        module: [ http_2xx ]
       static_configs:
         - targets:
-            - https://mcdupyog.sparrowsoftech.in/employee/ # Add your domains here
-            - https://mcdupyog.sparrowsoftech.in/monitoring/
-            #- https://niuatt.niua.in/pgadmin/login?next=%2Fpgadmin%2F
-            - https://mcdupyog.sparrowsoftech.in/kibana/
-            - https://mcdupyog.sparrowsoftech.in/tracing/
-            #- https://nudm.mohua.gov.in/
-            - https://mcdupyog-cicd.sparrowsoftech.in/
-          #- https://niuatt.niua.in/employee/
-          #- https://niuatt.niua.in/kafka-ui/
-
+            - https://digit-go.digit.org
+            - https://dev-djb.nitcon.in
       relabel_configs:
-        - source_labels: [__address__]
+        - source_labels: [ __address__ ]
           target_label: __param_target
-        - source_labels: [__param_target]
+        - source_labels: [ __param_target ]
           target_label: instance
         - target_label: __address__
           replacement: prometheus-blackbox-exporter:9115
-    - job_name: "blackbox_exporter"
+    - job_name: 'blackbox_exporter'
       static_configs:
-        - targets: ["prometheus-blackbox-exporter:9115"]
-    - job_name: "java-services"
-      kubernetes_sd_configs:
-        - role: pod
-      relabel_configs:
-        # Keep only pods with the label `app-type=java`
-        - source_labels: [__meta_kubernetes_pod_label_app_type]
-          action: keep
-          regex: java
-        # Extract the Pod IP and set it as the scrape target
-        - source_labels: [__meta_kubernetes_pod_ip]
-          action: replace
-          target_label: __address__
-          replacement: ${1}:9404
-        # Override the default metrics path if needed
-        - action: replace
-          target_label: __metrics_path__
-          replacement: /metrics
-        - source_labels: [__meta_kubernetes_namespace]
-          target_label: namespace
-        - source_labels: [__meta_kubernetes_pod_name]
-          target_label: pod
+        - targets: [ 'prometheus-blackbox-exporter:9115' ]
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+### loki-stack >>>>>>>>>>>>>>>>>>>>
+loki:
+  persistence:
+    enabled: true
+    accessModes:
+      - ReadWriteOnce
+    size: 30Gi
+  serviceAccount:
+    annotations: { }
+  additionalConfigs:
+    schema_config:
+      configs:
+        - from: "2020-10-24"
+          store: boltdb-shipper
+          object_store: filesystem
+          schema: v11
+          index:
+            prefix: index_
+            period: 24h
+    storage_config:
+      boltdb_shipper:
+        active_index_directory: /data/loki/index
+        cache_location: /data/loki/index_cache
+        shared_store: filesystem
+        cache_ttl: 24h
+      filesystem:
+        directory: /data/loki/chunks
+    compactor:
+      working_directory: /data/loki/boltdb-shipper-compactor
+      shared_store: filesystem
+      retention_enabled: true
+      compaction_interval: 168h
+    table_manager:
+      retention_deletes_enabled: true
+      retention_period: 168h  # 7 days
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
